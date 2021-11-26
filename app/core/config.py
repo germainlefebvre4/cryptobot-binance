@@ -33,11 +33,11 @@ class Settings(BaseSettings):
             return None
         return v
 
-    REDIS_SERVER: str = os.getenv("REDIS_USER", "localhost")
-    REDIS_PORT: str = os.getenv("REDIS_PORT", "5432")
+    REDIS_SENTINEL_SERVER: str = os.getenv("REDIS_USER", "localhost")
+    REDIS_SENTINEL_PORT: str = os.getenv("REDIS_SENTINEL_PORT", "5432")
     REDIS_USER: str = os.getenv("REDIS_USER", "cryptobot")
     REDIS_PASSWORD: str = os.getenv("REDIS_PASSWORD", "cryptobot")
-    REDIS_DB: str = os.getenv("REDIS_PASSWORD", "cryptobot")
+    REDIS_DATABASE: str = os.getenv("REDIS_PASSWORD", "cryptobot")
     REDIS_URI: Optional[RedisDsn] = None
 
     @validator("REDIS_URI", pre=True)
@@ -48,9 +48,9 @@ class Settings(BaseSettings):
             scheme="redis",
             user=values.get("REDIS_USER"),
             password=values.get("REDIS_PASSWORD"),
-            host=values.get("REDIS_SERVER"),
-            port=values.get("REDIS_PORT"),
-            path=f"/{values.get('REDIS_DB') or ''}",
+            host=values.get("REDIS_SENTINEL_SERVER"),
+            port=values.get("REDIS_SENTINEL_PORT"),
+            path=f"/{values.get('REDIS_DATABASE') or ''}",
         )
 
     SMTP_TLS: bool = True

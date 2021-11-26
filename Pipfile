@@ -24,6 +24,7 @@ python-multipart = "*"
 emails = "*"
 email-validator = "*"
 redis = "*"
+python-binance = "*"
 
 [requires]
 python_version = "3.8"
