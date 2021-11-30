@@ -88,3 +88,21 @@ def get_binance_assets(
         raise Exception("Error getting assets")
 
     return assets
+
+
+def get_binance_user_currency_trades(
+    binance_account: BinanceAccount,
+    base_currency: str,
+    quote_currency: str,
+    ) -> Optional[List[MarketCurrency]]:
+    client = Client(binance_account['binance_api_key'], binance_account['binance_api_secret'])
+
+    try:
+        trades = client.get_my_trades(
+            symbol=f"{base_currency}{quote_currency}",
+            limit=1000,
+        )
+    except:
+        raise Exception("Error getting trades")
+
+    return trades

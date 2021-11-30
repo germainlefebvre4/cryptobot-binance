@@ -6,7 +6,6 @@ from typing import List, Dict, Union, Any
 from fastapi.encoders import jsonable_encoder
 
 from app.utils.string import convert
-from app.utils.market_currency import get_redis_market_currency_key
 
 from app.cache.session import master, slave
 from app.cache.session import master as cache_write
