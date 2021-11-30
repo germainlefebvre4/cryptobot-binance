@@ -1,5 +1,8 @@
 from typing import Optional, List
 import requests
+from datetime import datetime
+
+from fastapi import Query
 
 from app.core.config import settings
 
@@ -39,7 +42,7 @@ def get_binance_currency_price(
 def get_binance_wallet_asset_volume(
     binance_account: BinanceAccount,
     base_currency: str,
-    ) -> Optional[MarketCurrency]:
+    ) -> Optional[WalletAsset]:
     client = Client(binance_account['binance_api_key'], binance_account['binance_api_secret'])
 
     try:
@@ -94,13 +97,20 @@ def get_binance_user_currency_trades(
     binance_account: BinanceAccount,
     base_currency: str,
     quote_currency: str,
+    # start_time: str = Query(None, '[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}'),
+    # end_time: str = Query(None, '[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}'),
     ) -> Optional[List[MarketCurrency]]:
     client = Client(binance_account['binance_api_key'], binance_account['binance_api_secret'])
+
+    # Format start/end time for query param
+    # if start_time:
+    #     start_time = int(datetime.strptime(start_time, '%Y-%m-%d').timestamp()*1000)
+    # if end_time:
+    #     end_time = int(datetime.strptime(end_time, '%Y-%m-%d').timestamp()*1000)
 
     try:
         trades = client.get_my_trades(
             symbol=f"{base_currency}{quote_currency}",
-            limit=1000,
         )
     except:
         raise Exception("Error getting trades")

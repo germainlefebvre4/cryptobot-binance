@@ -17,7 +17,7 @@ router = APIRouter()
 
 @router.get("/{base_currency}", response_model=schemas.WalletAsset)
 def read_wallet_asset(
-    user_id: str,
+    user_id: int = Query(..., ge=1),
     base_currency: str = Query(..., min_length=3, max_length=8),
 ) -> Any:
     """

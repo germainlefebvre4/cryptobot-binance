@@ -20,6 +20,10 @@ def read_user_trade(
     user_id: str,
     base_currency: str = Query(..., min_length=3, max_length=8),
     quote_currency: str = Query(..., min_length=3, max_length=8),
+    # start_time: str = Query(None, '[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}'),
+    # end_time: str = Query(None, '[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}'),
+    skip: int = 0,
+    limit: int = 100,
 ) -> Any:
     """
     Retrieve user_trade.
@@ -27,7 +31,7 @@ def read_user_trade(
     binance_account = services.get_binance_account_by_id(user_id=user_id)
 
     # Retrieve the user wallet asset
-    user_trades = crud.user_trade.get(
+    user_trades = crud.user_trade.get_multi(
         base_currency=base_currency,
         quote_currency=quote_currency,
         user_id=user_id,
@@ -45,10 +49,14 @@ def read_user_trade(
             obj_in=user_trades_in,
         )
 
-    user_trades = crud.user_trade.get(
+    user_trades = crud.user_trade.get_multi(
         base_currency=base_currency,
         quote_currency=quote_currency,
         user_id=user_id,
+        # start_time=start_time,
+        # end_time=end_time,
+        skip=skip,
+        limit=limit,
     )
 
     return user_trades

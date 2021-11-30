@@ -17,11 +17,13 @@ from app.schemas import UserTrade, UserTradeCreate, UserTradeUpdate
 
 
 class CRUDUserTrade(CRUDBase[UserTrade, UserTradeCreate, UserTradeUpdate]):
-    def get(
+    def get_multi(
         self, *,
         user_id: str,
         base_currency: str,
         quote_currency: str,
+        limit: int = 100,
+        skip: int = 0,
     ) -> List[UserTrade]:
         data_key = f"markets:binance:user:{user_id}:currency:{base_currency}:{quote_currency}:trades"
         if slave.exists(data_key):
@@ -29,7 +31,7 @@ class CRUDUserTrade(CRUDBase[UserTrade, UserTradeCreate, UserTradeUpdate]):
             trades = convert(json.loads(trades_str))
         else:
             trades = None
-        return trades
+        return trades[-limit:]
 
 
     def create(
