@@ -27,6 +27,10 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "cryptobot-binance"
     SENTRY_DSN: Optional[HttpUrl] = ""
 
+    API_URL: AnyHttpUrl = "http://localhost:8080/api/v1"
+    API_KEY_NAME: str = "access_token"
+    API_KEY: Optional[str]
+    
     @validator("SENTRY_DSN", pre=True)
     def sentry_dsn_can_be_blank(cls, v: str) -> Optional[str]:
         if len(v) == 0:

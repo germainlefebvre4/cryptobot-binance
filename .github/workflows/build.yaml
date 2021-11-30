@@ -42,7 +42,7 @@ jobs:
       - name: Publish to Docker Repository
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: germainlefebvre4/cryptobot-margin
+          name: germainlefebvre4/cryptobot-binance
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           tags: "${{ steps.semantic.outputs.new_release_version }}"
@@ -50,7 +50,7 @@ jobs:
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v2
         with:
-          repository: germainlefebvre4/cryptobot-margin
+          repository: germainlefebvre4/cryptobot-binance
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           readme-filepath: ./docs/dockerhub/README.md
