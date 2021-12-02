@@ -31,6 +31,7 @@ def get_binance_currency_price(
     quote_currency: str,
     ) -> Optional[MarketCurrency]:
     client = Client()
+    print("Binance API call")
     currency_price = float(client.get_symbol_ticker(symbol=f"{base_currency}{quote_currency}")['price'])
 
     return MarketCurrency(
@@ -45,6 +46,7 @@ def get_binance_wallet_assets_volume(
     client = Client(binance_account['binance_api_key'], binance_account['binance_api_secret'])
 
     try:
+        print("Binance API call")
         assets_balance = client.get_account()['balances']
     except:
         raise Exception("Error getting asset balance")
@@ -67,6 +69,7 @@ def get_binance_assets(
     client = Client(binance_account['binance_api_key'], binance_account['binance_api_secret'])
 
     try:
+        print("Binance API call")
         binance_assets = client.get_account()['balances']
         assets = [x['asset'] for x in binance_assets]
     except:
@@ -91,6 +94,7 @@ def get_binance_user_currency_trades(
     #     end_time = int(datetime.strptime(end_time, '%Y-%m-%d').timestamp()*1000)
 
     try:
+        print("Binance API call")
         trades = client.get_my_trades(
             symbol=f"{base_currency}{quote_currency}",
         )

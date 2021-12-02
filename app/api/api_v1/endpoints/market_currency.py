@@ -15,7 +15,7 @@ from app.api import deps, services
 router = APIRouter()
 
 
-@router.get("/{base_currency}/{quote_currency}", response_model=schemas.MarketCurrencyResponse)
+@router.get("/{base_currency}/{quote_currency}/price", response_model=schemas.MarketCurrencyResponse)
 def read_market_currency(
     base_currency: str = Query(..., min_length=3, max_length=8),
     quote_currency: str = Query(..., min_length=3, max_length=8),
