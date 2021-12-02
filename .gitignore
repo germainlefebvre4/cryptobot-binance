@@ -1,0 +1,8 @@
+.mypy_cache
+.pytest_cache
+.coverage
+htmlcov
+.env*
+!.env.template
+*.backup.*
+wip_*.py
