@@ -1,6 +1,7 @@
 from typing import Optional, List
 import requests
 from datetime import datetime
+from app.schemas.wallet_asset import WalletAssetResponse
 
 from fastapi import Query
 
@@ -38,28 +39,9 @@ def get_binance_currency_price(
         price=currency_price,
     )
 
-
-def get_binance_wallet_asset_volume(
-    binance_account: BinanceAccount,
-    base_currency: str,
-    ) -> Optional[WalletAsset]:
-    client = Client(binance_account['binance_api_key'], binance_account['binance_api_secret'])
-
-    try:
-        asset_balance = client.get_asset_balance(asset=base_currency)
-    except:
-        raise Exception("Error getting asset balance")
-
-    return WalletAsset(
-        asset=base_currency,
-        free=asset_balance['free'],
-        locked=asset_balance['locked'],
-    )
-
-
 def get_binance_wallet_assets_volume(
     binance_account: BinanceAccount,
-    ) -> Optional[List[MarketCurrency]]:
+    ) -> List[WalletAsset]:
     client = Client(binance_account['binance_api_key'], binance_account['binance_api_secret'])
 
     try:
@@ -69,12 +51,12 @@ def get_binance_wallet_assets_volume(
 
     assets = []
     for asset in assets_balance:
-        print(asset)
         assets.append(WalletAsset(
             asset=asset['asset'],
             free=asset['free'],
             locked=asset['locked'],
         ))
+    # print("get_binance_wallet_assets_volume", assets)
 
     return assets
 

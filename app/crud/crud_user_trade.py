@@ -28,10 +28,10 @@ class CRUDUserTrade(CRUDBase[UserTrade, UserTradeCreate, UserTradeUpdate]):
         data_key = f"markets:binance:user:{user_id}:currency:{base_currency}:{quote_currency}:trades"
         if slave.exists(data_key):
             trades_str = slave.get(data_key)
-            trades = convert(json.loads(trades_str))
+            trades = convert(json.loads(trades_str))[-limit:]
         else:
             trades = None
-        return trades[-limit:]
+        return trades
 
 
     def create(

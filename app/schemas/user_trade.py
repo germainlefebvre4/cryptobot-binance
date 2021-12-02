@@ -29,3 +29,8 @@ class UserTradeUpdate(UserTradeBase):
 
 class UserTrade(UserTradeBase):
     pass
+
+
+class UserTradeResponse(BaseModel):
+    object: Optional[List[UserTrade]] = []
+    last_update: Optional[datetime] = None

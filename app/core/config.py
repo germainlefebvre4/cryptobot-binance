@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     ENV: str = "prod"
     PROJECT_NAME: str = "cryptobot-binance"
     SENTRY_DSN: Optional[HttpUrl] = ""
+    LOG_LEVEL: str = "INFO"
 
     API_URL: AnyHttpUrl = "http://localhost:8080/api/v1"
     API_KEY_NAME: str = "access_token"

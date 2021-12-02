@@ -30,6 +30,21 @@ def read_user_trade(
     """
     binance_account = services.get_binance_account_by_id(user_id=user_id)
 
+    # Check and update Binance list of available assets
+    binance_assets = crud.binance_asset.get_multi()
+    if binance_assets is None:
+        assets = services.get_binance_assets(
+            binance_account=binance_account
+        )
+        if assets is None:
+            raise HTTPException(status_code=404, detail="Binance assets not found")
+        else:
+            crud.binance_asset.create_binance_assets(obj_in=assets)
+
+    # Check if asset belongs to Binance assets
+    if not crud.binance_asset.does_exist(currency=base_currency):
+        raise HTTPException(status_code=404, detail="Binance asset not found")
+
     # Retrieve the user wallet asset
     user_trades = crud.user_trade.get_multi(
         base_currency=base_currency,

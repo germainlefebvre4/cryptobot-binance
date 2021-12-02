@@ -20,3 +20,8 @@ class WalletAssetUpdate(WalletAssetBase):
 
 class WalletAsset(WalletAssetBase):
     pass
+
+
+class WalletAssetResponse(BaseModel):
+    object: Optional[WalletAsset]
+    last_update: Optional[datetime]

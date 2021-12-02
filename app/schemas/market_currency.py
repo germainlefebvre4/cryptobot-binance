@@ -20,3 +20,8 @@ class MarketCurrencyUpdate(MarketCurrencyBase):
 
 class MarketCurrency(MarketCurrencyBase):
     pass
+
+
+class MarketCurrencyResponse(BaseModel):
+    object: Optional[MarketCurrency] = None
+    last_update: Optional[datetime] = None

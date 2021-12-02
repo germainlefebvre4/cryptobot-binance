@@ -1,6 +1,7 @@
 from redis import Sentinel, Redis
 
 from app.core.config import settings
+import app.core.logging
 
 
 sentinel = Sentinel([(settings.REDIS_SENTINEL_SERVER, settings.REDIS_SENTINEL_PORT)], socket_timeout=0.1)
@@ -17,3 +18,6 @@ slave = sentinel.slave_for('mymaster', socket_timeout=0.1, password=settings.RED
 #     master.delete(key)
 # keys = slave.keys("*")
 # print(keys)
+
+# print("flushdb()")
+# master.flushdb()
