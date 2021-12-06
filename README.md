@@ -1,4 +1,4 @@
-# Cryptobot Controller
+# Cryptobot Binance
 
 ## Getting started
 Install required packages:
@@ -11,15 +11,7 @@ pip install pipenv
 Run the app:
 ```bash
 pipenv update
-pipenv run uvicorn app.main:app --port=8081 --reload
-```
-
-**Troubleshooting**
-
-Some distributions might miss some packages. These are some hints if needed:
-```bash
-# cryptography/cffi
-sudo apt install build-essential libssl-dev libffi-dev
+pipenv run uvicorn app.main:app --port=8083 --reload
 ```
 
 
@@ -34,13 +26,11 @@ pipenv update --dev
 ```
 
 ### Run locally
-This section use docker database called `cryptobot`.
 ```bash
-pipenv run uvicorn app.main:app --port=8081 --reload
+pipenv run uvicorn app.main:app --port=8083 --reload
 ```
 
 ### Run tests
-This section use docker database called `cryptobot_test`.
 ```bash
 pipenv run pytest -sv app/tests/
 ```

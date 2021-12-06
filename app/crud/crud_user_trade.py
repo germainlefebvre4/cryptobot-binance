@@ -45,7 +45,7 @@ class CRUDUserTrade(CRUDBase[UserTrade, UserTradeCreate, UserTradeUpdate]):
         data_key = f"markets:binance:user:{user_id}:currency:{base_currency}:{quote_currency}:trades"
         master.set(data_key, obj_in_data)
         data_ttl_seconds = (datetime.today() + timedelta(minutes=30)).timestamp()
-        master.expire(data_key, int(data_ttl_seconds))
+        master.expireat(data_key, int(data_ttl_seconds))
         trades_str = slave.get(data_key)
         trades = convert(json.loads(trades_str))
         return trades

@@ -45,10 +45,10 @@ class CRUDBinanceAsset(CRUDBase[WalletAsset, WalletAssetCreate, WalletAssetUpdat
         ttl_seconds = (datetime.today() + timedelta(days=1)).timestamp()
 
         master.sadd(key, *data)
-        master.expire(key, int(ttl_seconds))
+        master.expireat(key, int(ttl_seconds))
 
         master.set(key_last_update, last_update)
-        master.expire(key_last_update, int(ttl_seconds))
+        master.expireat(key_last_update, int(ttl_seconds))
 
         assets = slave.smembers(key)
         return convert(assets)

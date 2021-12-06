@@ -46,10 +46,10 @@ class CRUDMarketCurrency(CRUDBase[MarketCurrency, MarketCurrencyCreate, MarketCu
         ttl_seconds = (datetime.today() + timedelta(minutes=5)).timestamp()
 
         master.hmset(key, data)
-        master.expire(key, int(ttl_seconds))
+        master.expireat(key, int(ttl_seconds))
 
         master.set(key_last_update, last_update)
-        master.expire(key_last_update, int(ttl_seconds))
+        master.expireat(key_last_update, int(ttl_seconds))
 
         currency = slave.hgetall(key)
 
