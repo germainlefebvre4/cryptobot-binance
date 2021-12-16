@@ -3,7 +3,7 @@ import requests
 from datetime import datetime
 from app.schemas.wallet_asset import WalletAssetResponse
 
-from fastapi import Query
+from fastapi import Query, Request
 
 from app.core.config import settings
 
@@ -14,7 +14,12 @@ from app.schemas.binance_account import BinanceAccount
 
 from binance.client import Client
 
+from ratelimit import limits, RateLimitException
+from backoff import on_exception, expo
 
+
+@on_exception(expo, RateLimitException, max_tries=8)
+@limits(calls=1200, period=60)
 def get_binance_account_by_id(
     user_id: int,
 ):

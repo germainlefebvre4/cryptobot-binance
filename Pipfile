@@ -25,6 +25,9 @@ emails = "*"
 email-validator = "*"
 redis = "*"
 python-binance = "*"
+slowapi = "*"
+ratelimit = "*"
+backoff = "*"
 
 [requires]
 python_version = "3.8"

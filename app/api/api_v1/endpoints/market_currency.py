@@ -7,10 +7,14 @@ import requests
 from typing import Any, List, Optional, Dict
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
-from app.core.config import settings
 
+from app.core.config import settings
 from app import crud, schemas
 from app.api import deps, services
+
+from ratelimit import limits, RateLimitException
+from backoff import on_exception, expo
+
 
 router = APIRouter()
 
@@ -28,7 +32,10 @@ def read_market_currency(
     logger = logging.getLogger("app")
     logger.info("base_currency: %s", base_currency)
     
-    binance_account = services.get_binance_account_by_id(user_id=user_id)
+    try:
+        binance_account = services.get_binance_account_by_id(user_id=user_id)
+    except RateLimitException as e:
+        raise RateLimitException(e)
 
     # Check and update Binance list of available assets
     binance_assets = crud.binance_asset.get_multi()
