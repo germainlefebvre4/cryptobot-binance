@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import json
 
+from pydantic import ValidationError
 from typing import List, Dict, Union, Any
 
 from fastapi.encoders import jsonable_encoder
@@ -47,7 +48,11 @@ class CRUDUserTrade(CRUDBase[UserTrade, UserTradeCreate, UserTradeUpdate]):
         data_ttl_seconds = (datetime.today() + timedelta(minutes=30)).timestamp()
         master.expireat(data_key, int(data_ttl_seconds))
         trades_str = slave.get(data_key)
-        trades = convert(json.loads(trades_str))
+        try:
+            trades = convert(json.loads(trades_str))
+        except ValidationError as e:
+            raise dict(detail="Incorrect format", error=e)
+
         return trades
 
 
