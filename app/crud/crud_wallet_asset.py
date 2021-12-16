@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import json
 
+from pydantic import ValidationError
 from typing import List, Dict, Union, Any
 
 from fastapi.encoders import jsonable_encoder
@@ -83,8 +84,13 @@ class CRUDWalletAsset(CRUDBase[WalletAsset, WalletAssetCreate, WalletAssetUpdate
         wallet = slave.hgetall(key)
         wallet_last_update = slave.get(key_last_update)
 
+        try:
+            wallet_json = convert(wallet)
+        except ValidationError as e:
+            raise dict(detail="Error converting wallet to json", error=e)
+
         return WalletAssetResponse(
-            object=convert(wallet),
+            object=wallet_json,
             last_update=wallet_last_update,
         )
 
