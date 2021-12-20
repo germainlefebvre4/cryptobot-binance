@@ -47,7 +47,7 @@ class CRUDUserTrade(CRUDBase[UserTrade, UserTradeCreate, UserTradeUpdate]):
         master.set(data_key, obj_in_data)
         data_ttl_seconds = (datetime.today() + timedelta(minutes=30)).timestamp()
         master.expireat(data_key, int(data_ttl_seconds))
-        trades_str = slave.get(data_key)
+        trades_str = master.get(data_key)
         try:
             trades = convert(json.loads(trades_str))
         except ValidationError as e:
