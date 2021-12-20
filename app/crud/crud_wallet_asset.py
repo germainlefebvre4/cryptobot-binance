@@ -81,8 +81,8 @@ class CRUDWalletAsset(CRUDBase[WalletAsset, WalletAssetCreate, WalletAssetUpdate
         master.set(key_last_update, last_update)
         master.expireat(key_last_update, int(ttl_seconds))
         
-        wallet = slave.hgetall(key)
-        wallet_last_update = slave.get(key_last_update)
+        wallet = master.hgetall(key)
+        wallet_last_update = master.get(key_last_update)
 
         try:
             wallet_json = convert(wallet)
