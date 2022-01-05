@@ -6,3 +6,5 @@ htmlcov
 !.env.template
 *.backup.*
 wip_*.py
+.vscode/
+

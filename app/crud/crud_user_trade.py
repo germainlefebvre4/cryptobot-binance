@@ -29,7 +29,11 @@ class CRUDUserTrade(CRUDBase[UserTrade, UserTradeCreate, UserTradeUpdate]):
         data_key = f"markets:binance:user:{user_id}:currency:{base_currency}:{quote_currency}:trades"
         if slave.exists(data_key):
             trades_str = slave.get(data_key)
-            trades = convert(json.loads(trades_str))[-limit:]
+            trades_json = json.loads(trades_str)
+            if len(trades_json) > 0:
+                trades = convert(trades_json)[-limit:]
+            else:
+                trades = []
         else:
             trades = None
         return trades
