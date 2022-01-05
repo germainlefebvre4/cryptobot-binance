@@ -91,9 +91,12 @@ def read_last_user_trade(
     # Check and update Binance list of available assets
     binance_assets = crud.binance_asset.get_multi()
     if binance_assets is None:
-        assets = services.get_binance_assets(
-            binance_account=binance_account
-        )
+        try:
+            assets = services.get_binance_assets(
+                binance_account=binance_account
+            )
+        except:
+            return {}
         if assets is None:
             raise HTTPException(status_code=404, detail="Binance assets not found")
         else:
