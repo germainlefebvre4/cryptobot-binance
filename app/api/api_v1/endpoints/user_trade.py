@@ -57,6 +57,8 @@ def read_user_trade(
             base_currency=base_currency,
             quote_currency=quote_currency,
         )
+        if len(user_trades_in) == 0:
+            return []
         crud.user_trade.create(
             user_id=user_id,
             base_currency=base_currency,

@@ -58,7 +58,6 @@ def get_binance_wallet_assets_volume(
             free=asset['free'],
             locked=asset['locked'],
         ))
-    # print("get_binance_wallet_assets_volume", assets)
 
     return assets
 
@@ -99,6 +98,7 @@ def get_binance_user_currency_trades(
             symbol=f"{base_currency}{quote_currency}",
         )
     except:
+        return []
         raise Exception("Error getting trades")
 
     return trades
