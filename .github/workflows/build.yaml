@@ -40,7 +40,7 @@ jobs:
 
 
       - name: Publish to Docker Repository
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: germainlefebvre4/cryptobot-binance
           username: ${{ secrets.DOCKERHUB_USERNAME }}
